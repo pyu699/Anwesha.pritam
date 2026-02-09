@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Special Day 💝</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#4e342e,#3e2723);
+  overflow:hidden;
+  color:white;
+}
+
+/* FLOATING BACKGROUND */
+.float{
+  position:fixed;
+  bottom:-40px;
+  font-size:20px;
+  animation:floatUp linear infinite;
+  opacity:.6;
+  pointer-events:none;
+}
+@keyframes floatUp{
+  to{transform:translateY(-120vh)}
+}
+
+/* MAIL POPUP */
+.mail{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:50;
+}
+.mail-box{
+  background:#fff;
+  color:#4e342e;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  animation:zoom 1s ease;
+}
+
+/* COMMON */
+.container,.center{
+  height:100vh;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+button{
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:#d2691e;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+.card{
+  background:#fff3e0;
+  color:#4e342e;
+  padding:30px;
+  border-radius:20px;
+  width:85%;
+  max-width:350px;
+}
+
+/* PREMIUM */
+.premium-box{
+  width:260px;
+  height:360px;
+  border-radius:25px;
+  background:linear-gradient(135deg,#ffe259,#ffa751);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#4e342e;
+}
+
+/* CHOCOLATE GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,90px);
+  grid-template-rows:repeat(5,90px);
+  gap:12px;
+}
+
+.cube{
+  width:90px;
+  height:90px;
+  background:linear-gradient(#5d4037,#3e2723);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  cursor:pointer;
+}
+
+.blast{
+  animation:blast .45s forwards;
+}
+@keyframes blast{
+  to{transform:scale(1.7);opacity:0}
+}
+
+/* MESSAGE POPUP */
+.msg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:#fff3e0;
+  color:#4e342e;
+  padding:18px 30px;
+  border-radius:30px;
+  opacity:0;
+  transition:.4s;
+  z-index:20;
+}
+
+/* FINAL */
+.final{
+  animation:zoom 1.2s ease forwards;
+}
+@keyframes zoom{
+  from{transform:scale(.3);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MAIL POPUP -->
+<div class="mail" id="mail">
+  <div class="mail-box">
+    <h3>📩 New Mail</h3>
+    <p>
+      <b>Dear Anwesha,</b><br>
+      you have got a mail
+    </p>
+    <p>E-mail by <b>Pritam</b></p>
+    <br>
+    <button onclick="start()">Open Mail</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container" id="main">
+  <h1>Happy Chocolate Day 🍫</h1>
+  <p>You are my favorite sweetness ❤️</p>
+  <button onclick="openJust()">Tap for Surprise 🎁</button>
+</div>
+
+<!-- JUST FOR YOU -->
+<div class="popup" id="just">
+  <div class="card">
+    <h2>Just For You 💝</h2>
+    <button onclick="goPremium()">Next ➜</button>
+  </div>
+</div>
+
+<!-- PREMIUM -->
+<div class="center" id="premium">
+  <div class="premium-box">
+    <h2>Premium<br>Love 💖</h2>
+    <button onclick="unwrap()">Unwrap 🍫</button>
+  </div>
+</div>
+
+<!-- CHOCOLATE -->
+<div class="center" id="choco">
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- MESSAGE -->
+<div class="msg" id="msg"></div>
+
+<!-- FINAL (CORRECTED HERE) -->
+<div class="center final" id="final">
+  <div class="card">
+    <h2>Happy Chocolate Day 🍫</h2>
+    <p>You are sweeter than any chocolate in this world.</p>
+    <p><b>My Sweetest Addiction ❤️</b></p>
+    <p style="font-size:.9rem">
+      Even if chocolate disappears from this world,<br>
+      my love for you will never end.
+    </p>
+  </div>
+</div>
+
+<!-- SOUND -->
+<audio id="sound">
+  <source src="https://www.soundjay.com/food/chocolate-break-01.mp3">
+</audio>
+
+<script>
+/* FLOATING BACKGROUND */
+const icons=["🍫","❤️","⭐","🍩"];
+setInterval(()=>{
+  const f=document.createElement("div");
+  f.className="float";
+  f.innerText=icons[Math.floor(Math.random()*icons.length)];
+  f.style.left=Math.random()*100+"vw";
+  f.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),12000);
+},400);
+
+const messages=[
+"🍫 Life is dark, you are the milk 💖",
+"🍬 Zero calories, all chocolate 😋",
+"⚡ My sugar rush 💕",
+"🍫 Life is dark, you are the milk 🤎",
+"🍭 You are sweeter than chocolate 💗",
+"🔥 Melting for you 💞",
+"🍩 Deliciously yours 😘",
+"🍪 Deliciously yours 💕",
+"🍫 You are sweeter than truffle 💝",
+"🍬 Deliciously yours 😍",
+"🍫 Better than Cadbury ❤️",
+"💖 My love 🍓",
+"💯 100% pure love 💘",
+"🍫 Are you chocolate? 😏",
+"🍭 Because you are sweet 💞"
+];
+
+let count=0;
+
+function start(){
+  mail.style.display="none";
+  main.style.display="flex";
+}
+function openJust(){ just.style.display="flex"; }
+function goPremium(){
+  just.style.display="none";
+  main.style.display="none";
+  premium.style.display="flex";
+}
+function unwrap(){
+  premium.style.display="none";
+  choco.style.display="flex";
+  messages.forEach((_,i)=>{
+    let c=document.createElement("div");
+    c.className="cube";
+    c.innerHTML="❤️";
+    c.onclick=()=>hit(c,i);
+    grid.appendChild(c);
+  });
+}
+function hit(c,i){
+  c.onclick=null;
+  msg.innerText=messages[i];
+  msg.style.opacity=1;
+  sound.currentTime=0;
+  sound.play();
+  setTimeout(()=>msg.style.opacity=0,3000);
+  c.classList.add("blast");
+  setTimeout(()=>c.remove(),450);
+  count++;
+  if(count===15){
+    setTimeout(()=>{
+      choco.style.display="none";
+      final.style.display="flex";
+    },1200);
+  }
+}
+</script>
+
+</body>
+</html>
